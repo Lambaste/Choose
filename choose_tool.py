@@ -1,6 +1,6 @@
-import cidr
-import IPlookup
-import ipdiff
+import cidr_conv
+import ip_lookup
+import ip_diff
 
 def choice():
     choose_tool = int(input('''
@@ -10,7 +10,7 @@ IP Lookup      | 2
 Compare IPs    | 3
 >> '''))
     if choose_tool == 1:
-        cidr.cider()
+        cidr_conv.cider()
     elif choose_tool == 2:
         ip_lookup.look()
     elif choose_tool == 3:
