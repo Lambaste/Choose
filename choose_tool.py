@@ -14,7 +14,7 @@ Compare IPs    | 3
     elif choose_tool == 2:
         ip_lookup.look()
     elif choose_tool == 3:
-        ipdiff.compare()
+        ip_diff.compare()
              
 choice()
 
