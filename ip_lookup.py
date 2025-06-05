@@ -1,24 +1,28 @@
 import csv
 import socket
-from sys import argv
 
-script, file1 = argv
+def look():
+    file1 = input("Enter the filename containing the hostnames or IPs to look up: ").strip()
+    failed, lst = [], []
 
-failed, lst = [], []
+    try:
+        with open(file1) as f:
+            for line in f:
+                host = line.strip()
+                try:
+                    ip = socket.gethostbyname(host)
+                    lst.append((ip, host))
+                    print(f" {host} : {ip}")
+                except socket.gaierror:
+                    failed.append(host)
+    except FileNotFoundError:
+        print(f"Error: Filename '{file1}' does not exist in the current directory.")
+        return
 
-with open(file1) as f:
-	for line in f:
-		try:
-			x = socket.gethostbyname(line.strip())
-			lst.append((x, line))
-			l = line.rstrip('\n')
-			print(f" {l} : {x}")
-		except socket.gaierror:
-			failed.append(line.strip())
+    if failed:
+        print("\nFailed to resolve the following hosts:")
+        print("\n".join(failed))
 
-print("Failed to resolve the following hosts: ")
-print("\n".join(failed))
-
-with open(r"resolved_hosts.csv", 'w', newline='') as r:
-    writer = csv.writer(r, delimiter=",")
-    writer.writerows(lst)
+    with open("resolved_hosts.csv", 'w', newline='') as r:
+        writer = csv.writer(r, delimiter=",")
+        writer.writerows(lst)
