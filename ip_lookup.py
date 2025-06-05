@@ -2,7 +2,7 @@ import csv
 import socket
 
 def look():
-    file1 = input("Enter the filename containing the hostnames or IPs to look up: ").strip()
+    file1 = input("Enter the filename containing the hostnames to look up: ").strip()
     failed, lst = [], []
 
     try:
