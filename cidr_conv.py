@@ -1,29 +1,28 @@
 import ipaddress
-from sys import argv
 import sys
 import os
 
-script, file1 = argv
+def cidr():
+    file1 = input("Enter the filename containing the CIDR(s): ").strip()
+    lst = []
 
-lst = []
+    try:
+        with open(file1) as x:
+            for line in x:
+                net4 = ipaddress.ip_network(line.strip())
+                for i in net4:
+                    lst.append(str(i))
 
-try:
-	with open(file1) as x:
-		for line in x:
-			net4 = ipaddress.ip_network(line.strip())
-			for i in net4:
-				i = str(i)
-				lst.append(i)
+    except FileNotFoundError:
+        print(f"Error: Filename {file1} does not exist in current directory.")
+        return
 
-except FileNotFoundError:
-	print(f"Error: Filename {file1} does not exist in current directory.")
-	sys.exit(1)
+    except ValueError:
+        print("Error: Host bits are set in one of the CIDRs.")
+        return
 
-except ValueError:
-	print("Error: Host bits are set")
-	sys.exit(1)
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'return.csv')
+    print(f"\nThe following IPs have been added to return.csv file in {os.path.dirname(os.path.abspath(__file__))}:\n{', '.join(lst)}")
 
-print(f"\n The following IPs have been added to return.csv file in {os.path.dirname(os.path.abspath(__file__))}:\n {','.join(list)}")
-
-with open('return.csv', 'w') as f:
-	f.write("\n".join(lst))
+    with open(output_path, 'w') as f:
+        f.write("\n".join(lst))
