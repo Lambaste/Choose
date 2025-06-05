@@ -12,7 +12,7 @@ Compare IPs    | 3
     if choose_tool == 1:
         cidr.cider()
     elif choose_tool == 2:
-        IPlookup.look()
+        ip_lookup.look()
     elif choose_tool == 3:
         ipdiff.compare()
              
